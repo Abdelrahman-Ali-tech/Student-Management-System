@@ -7,62 +7,62 @@ import backend.model.Student;
 public class AdminRole {
 
     private StudentDatabase studentDatabase;
+    private ArrayList<Student> records;
+    
+    public  AdminRole(String fileName) {
+        this.studentDatabase = new StudentDatabase(fileName);
+        studentDatabase.loadFromFile();
 
-    public AdminRole(String fileName) {
-        /* this.studentDatabase = new StudentDatabase(fileName);
-        studentDatabase.readFromFile();*/
+        
     }
+   
 
-    public String AddStudent(String studentId, String fullName, int age, String gendeString, String department, float gpa) {
-        int validId;
+
+
+    public String AddStudent(int studentId, String fullName, int age, String gendeString, String department, float gpa) {
+        String validId=String.valueOf(studentId);
         if (!Validation.isValidName(fullName)) {
             return "Not valid Name";
         }
 
-        if (!Validation.isValidId(studentId)) {
+        if (!Validation.isValidId(validId)) {
             return "Not valid ID";
-        } else {
-            validId = Integer.parseInt(studentId);
-        }
+        } 
 
-        if (studentDatabase.contains(studentId)) {
+        if (!search(validId, "ID").isEmpty()) {
             return "this id already exists";
         }
 
-        Student record = new Student(int validId
-        ,String fullName,
-        int age, String gendeString
-        ,String department,
-        float gpa
-        );
+        Student record = new Student(studentId, fullName, age,  gendeString, department, gpa);
          studentDatabase.add(record);
          studentDatabase.saveToFile();
         return "Successfully added";
     }
   
 
-     public ArrayList<Student> ِviewStudents() {
-        return studentDatabase;
-    }
 
+     public ArrayList<Object> viewStudents() {
+        return studentDatabase.returnAllRecords();
+    }
     public ArrayList<Student> search(String target, String type_of_search) {
-        ArrayList<Student> records = new ArrayList<>();
+        ArrayList<Student> targetrecords = new ArrayList<>();
+        this.records = (ArrayList<Student>)(Object) studentDatabase.returnAllRecords();
         for (Student rStudent : records) {
             if (contains(rStudent, target, type_of_search)) {
-                records.add(rStudent);
+                targetrecords.add(rStudent);
             }
         }
-        return records;
+        return targetrecords;
     }
 
-    public boolean contains(Student Student, String target, String type_of_search) {
-        boolean result;
-        if (type_of_search == "name") {
-            result = Student.getName().equales(targetName);
+    public boolean contains(Student student, String target, String type_of_search) {
+        boolean result=false;
+        if (type_of_search.equals("name")) {
+            result = student.getFullName().equals(target);
         }
 
-        if (type_of_search == "ID") {
-            result = (Student.getId() == Integer.parseInt(target));
+        if (type_of_search.equals("ID")) {
+            result = (student.getStudentId()== Integer.parseInt(target));
         }
 
         return result;
@@ -72,13 +72,16 @@ public class AdminRole {
     public String deleteStudent(Student student)
     {
     studentDatabase.remove(student);
+    studentDatabase.saveToFile();
     return "Successfully removed ";
     }
     
-    public String updateStudent(Student student,String studentId, String fullName, int age, String gendeString, String department, float gpa)
+    public String updateStudent(Student student,int studentId, String fullName, int age, String gendeString, String department, float gpa)
     {
         deleteStudent(student);
         AddStudent( studentId,  fullName,  age,  gendeString,  department,  gpa);
        return "Successfully update "; 
     }
 }
+
+
