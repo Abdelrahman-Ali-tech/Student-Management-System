@@ -4,14 +4,19 @@
  */
 package gui.panels;
 
+import backend.model.Student;
+import backend.service.AdminRole;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ahmedessam
  */
 public class SearchUpdateDelete extends javax.swing.JFrame {
-    
+    private AdminRole admin = new AdminRole("students.txt"); 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchUpdateDelete.class.getName());
-
     /**
      * Creates new form SearchUpdateDelete
      */
@@ -161,6 +166,8 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
+        jTextField1.getAccessibleContext().setAccessibleName("id1");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -175,6 +182,78 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        try {
+        String id = jTextField1.getText().trim();
+        jTextField2.setText(id);
+        String name = jTextField3.getText().trim();
+        int age = Integer.parseInt(jTextField4.getText().trim());
+        String gender = jTextField5.getText().trim();
+        String dept = jTextField6.getText().trim();
+        float gpa = Float.parseFloat(jTextField7.getText().trim());
+
+        ArrayList<Student> found = admin.search(id, "ID");
+        if (found.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Student not found!");
+            return;
+        }
+
+        Student oldStudent = found.get(0);
+        String msg = admin.updateStudent(oldStudent, Integer.parseInt(id), name, age, gender, dept, gpa);
+        JOptionPane.showMessageDialog(this, msg);
+    } 
+    catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid numeric input!");
+        }
+    }
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+          String id = jTextField1.getText().trim();
+
+    if (id.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter a student ID.");
+        return;
+    }
+
+    ArrayList<Student> results = admin.search(id, "ID");
+    
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);
+
+    if (results.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No student found with ID: "+id,  "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        for (Student s : results) {
+            model.addRow(new Object[]{
+                s.getStudentId(),
+                s.getFullName(),
+                s.getAge(),
+                s.getGendeString(),
+                s.getDepartment(),
+                s.getGpa()
+            });
+        }
+    }
+    }
+private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        String id = jTextField1.getText().trim();
+
+    ArrayList<Student> found = admin.search(id, "ID");
+    if (found.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Student not found!");
+        return;
+    }
+
+    Student s = found.get(0);
+    String msg = admin.deleteStudent(s);
+    JOptionPane.showMessageDialog(this, msg);
+
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+    }
 
     /**
      * @param args the command line arguments

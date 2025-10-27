@@ -25,6 +25,15 @@ public class AdminDatabase extends Database {
         }
 
     }
+    public boolean search(String username ,String password ) {
+        boolean statue =false;
+        for (Object radmin : records) {
+            if (((Admin)radmin).getUserName().equals(username)&& ((Admin)radmin).getPassword().equals(password)) {
+               return true;
+            }
+        }
+        return statue;
+    }
     @Override
     public String lineRepresentation(Object obj) {
         Admin admin=(Admin) obj;

@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.data.AdminDatabase;
 import java.util.ArrayList;
 import backend.data.StudentDatabase;
 import backend.model.Student;
@@ -16,7 +17,14 @@ public class AdminRole {
         
     }
    
-
+    public static boolean login (String username ,String password ){
+        AdminDatabase adminDatabase=new AdminDatabase("admins.txt");
+        adminDatabase.loadFromFile();
+        
+        boolean statue=adminDatabase.search(username, password);
+        return statue;
+    
+    } 
 
 
     public String AddStudent(int studentId, String fullName, int age, String gendeString, String department, float gpa) {
@@ -44,6 +52,7 @@ public class AdminRole {
      public ArrayList<Object> viewStudents() {
         return studentDatabase.returnAllRecords();
     }
+     
     public ArrayList<Student> search(String target, String type_of_search) {
         ArrayList<Student> targetrecords = new ArrayList<>();
         this.records = (ArrayList<Student>)(Object) studentDatabase.returnAllRecords();
@@ -82,6 +91,12 @@ public class AdminRole {
         AddStudent( studentId,  fullName,  age,  gendeString,  department,  gpa);
        return "Successfully update "; 
     }
+    public static void main(String[] args) {
+    boolean result = AdminRole.login("ali", "pass123");
+    System.out.println(result ? "Login successful!" : "Login failed!");
+}
+    
+
 }
 
 

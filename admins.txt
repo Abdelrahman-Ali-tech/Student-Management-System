@@ -1,0 +1,5 @@
+admin,1234
+ali,pass123
+fatma,admin2025
+mohamed,java99
+sara,student1
