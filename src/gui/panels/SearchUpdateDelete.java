@@ -7,14 +7,16 @@ package gui.panels;
 import backend.model.Student;
 import backend.service.AdminRole;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ahmedessam
  */
-public class SearchUpdateDelete extends javax.swing.JFrame {
+public class SearchUpdateDelete extends javax.swing.JPanel {
     private AdminRole admin = new AdminRole("students.txt"); 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchUpdateDelete.class.getName());
     /**
@@ -22,6 +24,25 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
      */
     public SearchUpdateDelete() {
         initComponents();
+        // Make table selectable and populate detail fields when a row is clicked
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jTable1.getSelectedRow();
+                if (row != -1) {
+                    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+                    String selId = String.valueOf(model.getValueAt(row, 0));
+                    jTextField1.setText(selId);
+                    jTextField2.setText(selId);
+                    jTextField3.setText(String.valueOf(model.getValueAt(row, 1)));
+                    jTextField4.setText(String.valueOf(model.getValueAt(row, 2)));
+                    jTextField5.setText(String.valueOf(model.getValueAt(row, 3)));
+                    jTextField6.setText(String.valueOf(model.getValueAt(row, 4)));
+                    jTextField7.setText(String.valueOf(model.getValueAt(row, 5)));
+                }
+            }
+        });
     }
 
     /**
@@ -33,7 +54,6 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Search = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -45,16 +65,10 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Search.setForeground(new java.awt.Color(51, 153, 0));
-        Search.setText("Search");
-        Search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchActionPerformed(evt);
-            }
-        });
+    // Converted to JPanel: no default close operation
 
         jTextField1.setForeground(new java.awt.Color(153, 0, 0));
         jTextField1.setText("Student Id");
@@ -108,47 +122,67 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 0, 0));
         jButton3.setText("Delete");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        jButton1.setForeground(new java.awt.Color(0, 204, 51));
+        jButton1.setText("Return");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setForeground(new java.awt.Color(0, 0, 255));
+        jButton4.setText("Search");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Search)
-                        .addGap(43, 43, 43)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addGap(43, 43, 43)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jButton3))))
-                    .addComponent(jScrollPane1))
-                .addContainerGap(62, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(jButton1)))))
+                        .addGap(36, 36, 36)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Search)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -162,18 +196,14 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jTextField1.getAccessibleContext().setAccessibleName("id1");
 
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -182,32 +212,18 @@ public class SearchUpdateDelete extends javax.swing.JFrame {
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
-private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        try {
-        String id = jTextField1.getText().trim();
-        jTextField2.setText(id);
-        String name = jTextField3.getText().trim();
-        int age = Integer.parseInt(jTextField4.getText().trim());
-        String gender = jTextField5.getText().trim();
-        String dept = jTextField6.getText().trim();
-        float gpa = Float.parseFloat(jTextField7.getText().trim());
 
-        ArrayList<Student> found = admin.search(id, "ID");
-        if (found.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Student not found!");
-            return;
-        }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+    currentFrame.getContentPane().removeAll();
+    Home h = new Home();
+    currentFrame.add(h);
+    currentFrame.revalidate();
+    currentFrame.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        Student oldStudent = found.get(0);
-        String msg = admin.updateStudent(oldStudent, Integer.parseInt(id), name, age, gender, dept, gpa);
-        JOptionPane.showMessageDialog(this, msg);
-    } 
-    catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Invalid numeric input!");
-        }
-    }
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-          String id = jTextField1.getText().trim();
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+         String id = jTextField1.getText().trim();
 
     if (id.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter a student ID.");
@@ -232,10 +248,81 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
                 s.getGpa()
             });
         }
+        // populate detail fields with the first result so user can update/delete
+        Student first = results.get(0);
+        String fid = String.valueOf(first.getStudentId());
+        jTextField1.setText(fid); // also update the search field
+        jTextField2.setText(fid);
+        jTextField3.setText(first.getFullName());
+        jTextField4.setText(String.valueOf(first.getAge()));
+        jTextField5.setText(first.getGendeString());
+        jTextField6.setText(first.getDepartment());
+        jTextField7.setText(String.valueOf(first.getGpa()));
     }
+    }//GEN-LAST:event_jButton4ActionPerformed
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Update selected student
+        try {
+            String id = jTextField2.getText().trim(); // use detail ID field
+            if (id.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please select a student to update.", "No student selected", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int parsedId;
+            try {
+                parsedId = Integer.parseInt(id);
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "ID must be a valid number.", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String name = jTextField3.getText().trim();
+            int age = Integer.parseInt(jTextField4.getText().trim());
+            String gender = jTextField5.getText().trim();
+            String dept = jTextField6.getText().trim();
+            float gpa = Float.parseFloat(jTextField7.getText().trim());
+
+            ArrayList<Student> found = admin.search(String.valueOf(parsedId), "ID");
+            if (found.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Student not found!", "Not found", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Student oldStudent = found.get(0);
+            String msg;
+            try {
+                msg = admin.updateStudent(oldStudent, parsedId, name, age, gender, dept, gpa);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error during update: " + ex.getMessage(), "Update Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, msg, "Update", JOptionPane.INFORMATION_MESSAGE);
+
+            // refresh table to reflect updated record
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            ArrayList<Student> refreshed = admin.search(String.valueOf(parsedId), "ID");
+            for (Student s : refreshed) {
+                model.addRow(new Object[]{
+                    s.getStudentId(),
+                    s.getFullName(),
+                    s.getAge(),
+                    s.getGendeString(),
+                    s.getDepartment(),
+                    s.getGpa()
+                });
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid numeric input!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String id = jTextField1.getText().trim();
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Use the detail ID field for deletion so we delete the selected record
+        String id = jTextField2.getText().trim();
 
     ArrayList<Student> found = admin.search(id, "ID");
     if (found.isEmpty()) {
@@ -246,13 +333,15 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
     Student s = found.get(0);
     String msg = admin.deleteStudent(s);
     JOptionPane.showMessageDialog(this, msg);
-
+        // clear details and refresh table
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
     }
 
     /**
@@ -276,14 +365,22 @@ private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SearchUpdateDelete().setVisible(true));
+        /* Create and display the form as a panel inside a JFrame */
+        java.awt.EventQueue.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Search/Modify Students");
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(new SearchUpdateDelete());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Search;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
