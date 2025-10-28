@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
  *
  * @author ahmedessam
  */
-public class Home extends javax.swing.JFrame {
+public class Home extends javax.swing.JPanel {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Home.class.getName());
 
@@ -35,7 +35,7 @@ public class Home extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    // Converted to JPanel: no default close operation
 
         jTextField1.setFont(new java.awt.Font("Helvetica Neue", 3, 24)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(0, 153, 153));
@@ -66,8 +66,8 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -97,7 +97,7 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        pack();
+        // pack() is for top-level windows; this is now a JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -148,8 +148,15 @@ public class Home extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Home().setVisible(true));
+        /* Create and display the form as a panel in a frame */
+        java.awt.EventQueue.invokeLater(() -> {
+            javax.swing.JFrame f = new javax.swing.JFrame("Home");
+            f.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            f.getContentPane().add(new Home());
+            f.pack();
+            f.setLocationRelativeTo(null);
+            f.setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

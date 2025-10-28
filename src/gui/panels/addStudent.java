@@ -11,7 +11,7 @@ import java.io.IOException;
  *
  * @author Khaled
  */
-public class addStudent extends javax.swing.JFrame {
+public class addStudent extends javax.swing.JPanel {
 
     /**
      * Creates new form addStudent
@@ -60,10 +60,11 @@ public class addStudent extends javax.swing.JFrame {
         textname = new javax.swing.JTextField();
         textgpa = new javax.swing.JTextField();
         textage = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    // Converted to JPanel: no default close operation
 
         jLabel1.setText("student id");
 
@@ -122,8 +123,16 @@ public class addStudent extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        jButton2.setForeground(new java.awt.Color(51, 153, 0));
+        jButton2.setText("Return");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -150,6 +159,8 @@ public class addStudent extends javax.swing.JFrame {
                             .addComponent(textgpa)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(29, 29, 29)
                         .addComponent(savebutton)))
                 .addGap(35, 35, 35))
         );
@@ -187,11 +198,12 @@ public class addStudent extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(textgpa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addComponent(savebutton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(savebutton)
+                            .addComponent(jButton2))
                         .addContainerGap())))
         );
 
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -325,6 +337,16 @@ public class addStudent extends javax.swing.JFrame {
     } 
     }//GEN-LAST:event_departementActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+    currentFrame.getContentPane().removeAll();
+    Home h = new Home();
+    currentFrame.add(h);
+    currentFrame.revalidate();
+    currentFrame.repaint();
+    
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,11 +374,14 @@ public class addStudent extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new addStudent().setVisible(true);
-            }
+        /* Create and display the form as a panel inside a JFrame */
+        java.awt.EventQueue.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Add Student");
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(new addStudent());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
         });
     }
 
@@ -364,6 +389,7 @@ public class addStudent extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> departement;
     private javax.swing.JComboBox<String> gender;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
